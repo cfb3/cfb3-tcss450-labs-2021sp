@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "TCSS 450 Lab for creating a webservice",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfb3/cfb3-tcss450-labs-2021sp.git"
+  },
   "scripts": {
     "test": "index.js"
   },
@@ -11,7 +15,7 @@
     "Mobile",
     "Apps"
   ],
-  "author": "TCSS 450",
+  "author": "Charles Bryan",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
