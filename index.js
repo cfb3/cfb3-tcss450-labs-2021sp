@@ -59,7 +59,7 @@ app.get("/", (request, response) => {
  */
 app.use("/doc", express.static('apidoc'))
 
-app.use("files", express.static('routes'))
+app.use("/files", express.static('routes'))
 
 /* 
 * Heroku will assign a port you can use via the 'PORT' environment variable
