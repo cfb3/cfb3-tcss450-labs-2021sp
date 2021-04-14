@@ -3,19 +3,11 @@ const express = require('express')
 
 var router = express.Router()
 
-// Obtain a Pool of DB connections. 
-// const { Pool } = require('pg')
-// const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: {
-//         rejectUnauthorized: false,
-//     }
-// })
-
 //Access the connection to Heroku Database
 const pool = require('../utilities').pool
 
-let validation = require('../utilities').validation
+const validation = require('../utilities').validation
+let isStringProvided = validation.isStringProvided
 
 /**
  * @apiDefine JSONError
@@ -43,7 +35,7 @@ let validation = require('../utilities').validation
  */ 
 router.post("/", (request, response) => {
 
-    if (validation.isStringProvided(request.body.name) && validation.isStringProvided(request.body.message)) {
+    if (isStringProvided(request.body.name) && isStringProvided(request.body.message)) {
         const theQuery = "INSERT INTO DEMO(Name, Message) VALUES ($1, $2) RETURNING *"
         const values = [request.body.name, request.body.message]
 
@@ -99,7 +91,7 @@ router.get("/:name?", (request, response) => {
     let values = [request.params.name]
 
     //No name was sent so SELECT on all
-    if(!validation.isStringProvided(request.params.name)) {
+    if(!isStringProvided(request.params.name)) {
         values = ["%"]
     }
 
@@ -146,7 +138,7 @@ router.get("/:name?", (request, response) => {
  */ 
 router.put("/", (request, response) => {
 
-    if (validation.isStringProvided(request.body.name) && validation.isStringProvided(request.body.message)) {
+    if (isStringProvided(request.body.name) && isStringProvided(request.body.message)) {
         const theQuery = "UPDATE Demo SET message = $1 WHERE name = $2 RETURNING *"
         const values = [request.body.message, request.body.name]
 
@@ -197,7 +189,7 @@ router.put("/", (request, response) => {
  */ 
 router.delete("/:name", (request, response) => {
 
-    if (validation.isStringProvided(request.params.name)) {
+    if (isStringProvided(request.params.name)) {
         const theQuery = "DELETE FROM Demo  WHERE name = $1 RETURNING *"
         const values = [request.params.name]
 
