@@ -10,6 +10,8 @@ let isStringProvided = validation.isStringProvided
 const generateHash = require('../utilities').generateHash
 const generateSalt = require('../utilities').generateSalt
 
+const sendEmail = require('../utilities').sendEmail
+
 const router = express.Router()
 
 /**
@@ -76,6 +78,7 @@ router.post('/', (request, response) => {
                     success: true,
                     email: result.rows[0].email
                 })
+                sendEmail("our.email@lab.com", email, "Welcome to our App!", "Please verify your Email account.")
             })
             .catch((error) => {
                 //log the error
