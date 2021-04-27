@@ -1,7 +1,7 @@
-var Pushy = require('pushy');
+const Pushy = require('pushy');
 
 // Plug in your Secret API Key 
-var pushyAPI = new Pushy(process.env.PUSHY_API_KEY);
+const pushyAPI = new Pushy(process.env.PUSHY_API_KEY);
 
 //use to send message to a specific client by the token
 function sendMessageToIndividual(token, message) {
@@ -27,7 +27,7 @@ function sendMessageToIndividual(token, message) {
     })
 }
 
-//add other "sendYypeToIndividual" functions here. Don't forget to exprot them
+//add other "sendTypeToIndividual" functions here. Don't forget to export them
 
 module.exports = {
     sendMessageToIndividual
