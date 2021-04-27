@@ -2,14 +2,11 @@
 const express = require('express')
 
 //Access the connection to Heroku Database
-let pool = require('../utilities/exports').pool
+const pool = require('../utilities/exports').pool
 
-var router = express.Router()
+const router = express.Router()
 
-//This allows parsing of the body of POST requests, that are encoded in JSON
-router.use(require("body-parser").json())
-
-let middleware = require('../utilities/middleware')
+const middleware = require('../utilities/middleware')
 
 /**
  * @api {put} /auth Request to insert a Pushy Token for the user
@@ -71,7 +68,7 @@ router.put('/', middleware.checkToken, (request, response, next) => {
 }, (request, response) => {
     //ON CONFLICT is a Postgressql syntax. it allows for an extra
     //action when conflicts occur with inserts. This will update 
-    //an exisiting users token. 
+    //an existing users token. 
     let insert = `INSERT INTO Push_Token(MemberId, Token)
                   VALUES ($1, $2)
                   ON CONFLICT (MemberId) DO UPDATE SET token=$2
@@ -80,7 +77,7 @@ router.put('/', middleware.checkToken, (request, response, next) => {
     pool.query(insert, values)
         .then(result => {
             response.send({
-                sucess: true
+                success: true
             })
         }).catch(err => {
             response.status(400).send({
@@ -145,7 +142,7 @@ router.delete('/', middleware.checkToken, (request, response, next) => {
     pool.query(insert, values)
         .then(result => {
             response.send({
-                sucess: true
+                success: true
             })
         }).catch(err => {
             response.status(400).send({
