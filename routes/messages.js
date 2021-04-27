@@ -2,14 +2,14 @@
 const express = require('express')
 
 //Access the connection to Heroku Database
-let pool = require('../utilities/exports').pool
+const pool = require('../utilities/exports').pool
 
-var router = express.Router()
+const router = express.Router()
 
-//This allows parsing of the body of POST requests, that are encoded in JSON
-router.use(require("body-parser").json())
+const msg_functions = require('../utilities/exports').messaging
 
-let msg_functions = require('../utilities/exports').messaging
+const validation = require('../utilities').validation
+let isStringProvided = validation.isStringProvided
 
 /**
  * @apiDefine JSONError
@@ -36,13 +36,13 @@ let msg_functions = require('../utilities/exports').messaging
  * 
  * @apiError (400: SQL Error) {String} message the reported SQL error details
  * 
- * @apiError (400: Unknow Chat ID) {String} message "invalid chat id"
+ * @apiError (400: Unknown Chat ID) {String} message "invalid chat id"
  * 
  * @apiUse JSONError
  */ 
 router.post("/", (request, response, next) => {
     //validate on empty parameters
-    if (!request.body.chatId || !request.body.message) {
+    if (!isStringProvided(request.body.chatId) || !isStringProvided(request.body.message)) {
         response.status(400).send({
             message: "Missing required information"
         })
@@ -89,7 +89,7 @@ router.post("/", (request, response, next) => {
                     }
                 }).catch(error => {
                     response.status(400).send({
-                        message: "SQL Error on memeber in chat check",
+                        message: "SQL Error on member in chat check",
                         error: error
                     })
                 })
@@ -163,7 +163,7 @@ router.post("/", (request, response, next) => {
  * @apiSuccess {Number} rowCount the number of messages returned
  * @apiSuccess {Object[]} messages List of massages in the message table
  * @apiSuccess {String} messages.messageId The id for this message
- * @apiSuccess {String} messages.email The email of the user who poseted this message
+ * @apiSuccess {String} messages.email The email of the user who posted this message
  * @apiSuccess {String} messages.message The message text
  * @apiSuccess {String} messages.timestamp The timestamp of when this message was posted
  * 
@@ -177,7 +177,7 @@ router.post("/", (request, response, next) => {
  */ 
 router.get("/:chatId?/:messageId?", (request, response, next) => {
         //validate chatId is not empty or non-number
-        if (!request.params.chatId) {
+        if (!isStringProvided(request.params.chatId)) {
             response.status(400).send({
                 message: "Missing required information"
             })
@@ -189,7 +189,7 @@ router.get("/:chatId?/:messageId?", (request, response, next) => {
             next()
         }
     }, (request, response, next) => {
-        //validate that the ChatId exisits
+        //validate that the ChatId exists
         let query = 'SELECT * FROM CHATS WHERE ChatId=$1'
         let values = [request.params.chatId]
 
