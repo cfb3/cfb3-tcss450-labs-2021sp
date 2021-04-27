@@ -52,7 +52,7 @@ router.post("/", (request, response, next) => {
     pool.query(insert, values)
         .then(result => {
             response.send({
-                sucess: true,
+                success: true,
                 chatID:result.rows[0].chatid
             })
         }).catch(err => {
@@ -174,7 +174,7 @@ console.log(request.decoded)
     pool.query(insert, values)
         .then(result => {
             response.send({
-                sucess: true
+                success: true
             })
         }).catch(err => {
             response.status(400).send({
@@ -240,7 +240,7 @@ router.get("/:chatId", (request, response, next) => {
             })
         })
     }, (request, response) => {
-        //REtrive the members
+        //Retrieve the members
         let query = `SELECT Members.Email 
                     FROM ChatMembers
                     INNER JOIN Members ON ChatMembers.MemberId=Members.MemberId
@@ -266,7 +266,7 @@ router.get("/:chatId", (request, response, next) => {
  * @apiGroup Chats
  * 
  * @apiDescription Does not delete the user associated with the required JWT but 
- * instead delelets the user based on the email parameter.  
+ * instead deletes the user based on the email parameter.  
  * 
  * @apiParam {Number} chatId the chat to delete the user from
  * @apiParam {String} email the email of the user to delete
@@ -368,7 +368,7 @@ router.delete("/:chatId/:email", (request, response, next) => {
     pool.query(insert, values)
         .then(result => {
             response.send({
-                sucess: true
+                success: true
             })
         }).catch(err => {
             response.status(400).send({
