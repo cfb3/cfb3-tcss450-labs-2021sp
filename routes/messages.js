@@ -42,7 +42,7 @@ let isStringProvided = validation.isStringProvided
  */ 
 router.post("/", (request, response, next) => {
     //validate on empty parameters
-    if (!isStringProvided(request.body.chatId) || !isStringProvided(request.body.message)) {
+    if (request.body.chatId === undefined || !isStringProvided(request.body.message)) {
         response.status(400).send({
             message: "Missing required information"
         })
@@ -177,7 +177,7 @@ router.post("/", (request, response, next) => {
  */ 
 router.get("/:chatId?/:messageId?", (request, response, next) => {
         //validate chatId is not empty or non-number
-        if (!isStringProvided(request.params.chatId)) {
+        if (request.body.chatId === undefined) {
             response.status(400).send({
                 message: "Missing required information"
             })
