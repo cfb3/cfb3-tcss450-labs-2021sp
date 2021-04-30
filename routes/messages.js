@@ -177,7 +177,7 @@ router.post("/", (request, response, next) => {
  */ 
 router.get("/:chatId?/:messageId?", (request, response, next) => {
         //validate chatId is not empty or non-number
-        if (request.body.chatId === undefined) {
+        if (request.params.chatId === undefined) {
             response.status(400).send({
                 message: "Missing required information"
             })
