@@ -1,0 +1,62 @@
+{
+    "log": {
+        "tag" : {
+            "fg": "default",
+            "bg": "default"
+        },
+        "msg": {
+            "fg": "default",
+            "bg": "default"
+        }
+    },
+    "verbose": {
+        "tag" : {
+            "fg": "fgBlack",
+            "bg": "bgYellow"
+        },
+        "msg": {
+            "fg": "fgBlack",
+            "bg": "bgYellow"
+        }
+    },
+    "debug": {
+        "tag" : {
+            "fg": "fgGreen",
+            "bg": "default"
+        },
+        "msg": {
+            "fg": "fgGreen",
+            "bg": "default"
+        }
+    },
+    "info": {
+        "tag" : {
+            "fg": "fgBlack",
+            "bg": "bgCyan"
+        },
+        "msg": {
+            "fg": "fgBlack",
+            "bg": "bgCyan"
+        }
+    },
+    "warn": {
+        "tag" : {
+            "fg": "fgBrightMagenta",
+            "bg": "default"
+        },
+        "msg": {
+            "fg": "fgBrightMagenta",
+            "bg": "default"
+        }
+    },
+    "error": {
+        "tag" : {
+            "fg": "fgWhite",
+            "bg": "bgBrightRed"
+        },
+        "msg": {
+            "fg": "fgBrightRed",
+            "bg": "default"
+        }
+    }
+}

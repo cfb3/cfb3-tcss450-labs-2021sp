@@ -1,0 +1,23 @@
+{
+  "name": "cfb3-logger",
+  "version": "1.2.1",
+  "description": "Provides functions for logging to the console",
+  "main": "logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfb3/cfb3logger.git"
+  },
+  "keywords": [
+    "node.js",
+    "logger"
+  ],
+  "author": "Charles Bryan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cfb3/cfb3logger/issues"
+  },
+  "homepage": "https://github.com/cfb3/cfb3logger#readme"
+}
