@@ -1,5 +1,5 @@
-# cfb3logger
-[https://github.com/cfb3/cfb3logger](https://github.com/cfb3/cfb3logger)<hr />
+# uwnetid-logger
+[https://github.com/uwnetid/uwnetid-logger](https://github.com/uwnetid/uwnetid-logger)<hr />
 
 ## SUMMARY
 A simple logging package for Node.js projects with customizable formatting for different logging levels.<hr />
