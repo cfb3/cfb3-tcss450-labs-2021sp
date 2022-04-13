@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS Members CASCADE;
 CREATE TABLE Members (MemberID SERIAL PRIMARY KEY,
                       FirstName VARCHAR(255) NOT NULL,
 		              LastName VARCHAR(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE Members (MemberID SERIAL PRIMARY KEY,
                       Verification INT DEFAULT 0
 );
 
-DROP TABLE IF EXISTS Contacts;
+DROP TABLE IF EXISTS Contacts CASCADE;
 CREATE TABLE Contacts(PrimaryKey SERIAL PRIMARY KEY,
                       MemberID_A INT NOT NULL,
                       MemberID_B INT NOT NULL,
@@ -18,19 +18,19 @@ CREATE TABLE Contacts(PrimaryKey SERIAL PRIMARY KEY,
                       FOREIGN KEY(MemberID_B) REFERENCES Members(MemberID)
 );
 
-DROP TABLE IF EXISTS Chats;
+DROP TABLE IF EXISTS Chats CASCADE;
 CREATE TABLE Chats (ChatID SERIAL PRIMARY KEY,
                     Name VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS ChatMembers;
+DROP TABLE IF EXISTS ChatMembers CASCADE;
 CREATE TABLE ChatMembers (ChatID INT NOT NULL,
                           MemberID INT NOT NULL,
                           FOREIGN KEY(MemberID) REFERENCES Members(MemberID),
                           FOREIGN KEY(ChatID) REFERENCES Chats(ChatID)
 );
 
-DROP TABLE IF EXISTS Messages;
+DROP TABLE IF EXISTS Messages CASCADE;
 CREATE TABLE Messages (PrimaryKey SERIAL PRIMARY KEY,
                        ChatID INT,
                        Message VARCHAR(255),
@@ -40,7 +40,7 @@ CREATE TABLE Messages (PrimaryKey SERIAL PRIMARY KEY,
                        TimeStamp TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
-DROP TABLE IF EXISTS Locations;
+DROP TABLE IF EXISTS Locations CASCADE;
 CREATE TABLE Locations (PrimaryKey SERIAL PRIMARY KEY,
                         MemberID INT,
                         Nickname VARCHAR(255),
@@ -50,14 +50,14 @@ CREATE TABLE Locations (PrimaryKey SERIAL PRIMARY KEY,
                         FOREIGN KEY(MemberID) REFERENCES Members(MemberID)
 );
 
-DROP TABLE IF EXISTS Demo;
+DROP TABLE IF EXISTS Demo CASCADE;
 CREATE TABLE Demo (DemoID SERIAL PRIMARY KEY,
                         Name VARCHAR(255) NOT NULL UNIQUE,
                         Message VARCHAR(255)
 );
 
 
-DROP TABLE IF EXISTS Push_Token;
+DROP TABLE IF EXISTS Push_Token CASCADE;
 CREATE TABLE Push_Token (KeyID SERIAL PRIMARY KEY,
                         MemberID INT NOT NULL UNIQUE,
                         Token VARCHAR(255),

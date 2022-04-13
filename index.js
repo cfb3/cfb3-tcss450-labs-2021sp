@@ -59,7 +59,7 @@ app.get("/", (request, response) => {
  */
 app.use("/doc", express.static('apidoc'))
 
-app.use("/files", express.static('routes'))
+app.use("/files", express.static('static'))
 app.use("/files/logger", express.static('routes/logger'))
 
 /* 
