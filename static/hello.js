@@ -1,33 +1,33 @@
 //express is the framework we're going to use to handle requests
-const express = require('express')
+const express = require("express");
 
 //retrieve the router object from express
-var router = express.Router()
+var router = express.Router();
 
 /**
  * @api {get} /hello Request a Hello World message
  * @apiName GetHello
  * @apiGroup Hello
  *
- * @apiSuccess {String} message Hello World message
+ * @apiSuccess {String} message the String: "Hello, you sent a GET request"
  */
 router.get("/", (request, response) => {
-    response.send({
-        message: "Hello, you sent a GET request"
-    })
-})
+  response.send({
+    message: "Hello, you sent a GET request",
+  });
+});
 
 /**
  * @api {post} /hello Request a Hello World message
  * @apiName PostHello
  * @apiGroup Hello
- * 
- * @apiSuccess {String} message Hello World message
- */ 
+ *
+ * @apiSuccess {String} message the String: "Hello, you sent a POST request"
+ */
 router.post("/", (request, response) => {
-    response.send({
-        message: "Hello, you sent a POST request"
-    })
-})
+  response.send({
+    message: "Hello, you sent a POST request",
+  });
+});
 // "return" the router
-module.exports = router
+module.exports = router;
