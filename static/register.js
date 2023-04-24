@@ -1,6 +1,4 @@
 //express is the framework we're going to use to handle requests
-const { response } = require("express");
-const { request } = require("express");
 const express = require("express");
 
 //Access the connection to Heroku Database
@@ -51,59 +49,69 @@ const router = express.Router();
 router.post(
   "/",
   (request, response, next) => {
-    //Retrieve data from query params
-    const first = request.body.first;
-    const last = request.body.last;
-    const username = isStringProvided(request.body.username)
+    request.body.username = isStringProvided(request.body.username)
       ? request.body.username
       : request.body.email;
-    const email = request.body.email;
-    const password = request.body.password;
+
     //Verify that the caller supplied all the parameters
     //In js, empty strings or null values evaluate to false
     if (
-      isStringProvided(first) &&
-      isStringProvided(last) &&
-      isStringProvided(username) &&
-      isStringProvided(email) &&
-      isStringProvided(password)
+      isStringProvided(request.body.first) &&
+      isStringProvided(request.body.last) &&
+      isStringProvided(request.body.username) &&
+      isStringProvided(request.body.email) &&
+      isStringProvided(request.body.password)
     ) {
-      //We're using placeholders ($1, $2, $3) in the SQL query string to avoid SQL Injection
-      //If you want to read more: https://stackoverflow.com/a/8265319
-      let theQuery =
-        "INSERT INTO MEMBERS(FirstName, LastName, Username, Email) VALUES ($1, $2, $3, $4) RETURNING Email, MemberID";
-      let values = [first, last, username, email];
-      pool
-        .query(theQuery, values)
-        .then((result) => {
-          //stash the memberid into the request object to be used in the next function
-          request.memberid = result.rows[0].memberid;
-          next();
-        })
-        .catch((error) => {
-          //log the error  for debugging
-          // console.log("Member insert")
-          // console.log(error)
-          if (error.constraint == "members_username_key") {
-            response.status(400).send({
-              message: "Username exists",
-            });
-          } else if (error.constraint == "members_email_key") {
-            response.status(400).send({
-              message: "Email exists",
-            });
-          } else {
-            response.status(400).send({
-              message: "other error, see detail",
-              detail: error.detail,
-            });
-          }
-        });
+      next();
     } else {
       response.status(400).send({
         message: "Missing required information",
       });
     }
+  },
+  (request, response, next) => {
+    //We're storing salted hashes to make our application more secure
+    //If you're interested as to what that is, and why we should use it
+    //watch this youtube video: https://www.youtube.com/watch?v=8ZtInClXe1Q
+    let salt = generateSalt(32);
+    let salted_hash = generateHash(request.body.password, salt);
+
+    //We're using placeholders ($1, $2, $3) in the SQL query string to avoid SQL Injection
+    //If you want to read more: https://stackoverflow.com/a/8265319
+    let theQuery =
+      "INSERT INTO MEMBERS(FirstName, LastName, Username, Email) VALUES ($1, $2, $3, $4) RETURNING Email, MemberID";
+    let values = [
+      request.body.first,
+      request.body.last,
+      request.body.username,
+      request.body.email,
+    ];
+    pool
+      .query(theQuery, values)
+      .then((result) => {
+        //stash the memberid into the request object to be used in the next function
+        request.memberid = result.rows[0].memberid;
+        next();
+      })
+      .catch((error) => {
+        //log the error
+        // console.log(error)
+        if (error.constraint == "members_username_key") {
+          response.status(400).send({
+            message: "Username exists",
+          });
+        } else if (error.constraint == "members_email_key") {
+          response.status(400).send({
+            message: "Email exists",
+          });
+        } else {
+          console.log(error);
+          response.status(400).send({
+            message: "other error, see detail",
+            detail: error.detail,
+          });
+        }
+      });
   },
   (request, response) => {
     //We're storing salted hashes to make our application more secure
