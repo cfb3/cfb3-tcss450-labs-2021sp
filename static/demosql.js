@@ -23,7 +23,8 @@ let isStringProvided = validation.isStringProvided;
  * @apiBody {String} message a message to store with the name
  *
  * @apiSuccess (Success 201) {boolean} success true when the name is inserted
- * @apiSuccess (Success 201) {String} message the inserted name
+ * @apiSuccess (Success 201) {String} message the string "Inserted: ***name***" where ***name*** corresponds
+ * to the parameter string name.
  *
  * @apiError (400: Name exists) {String} message "Name exists"
  *
@@ -125,7 +126,8 @@ router.get("/:name?", (request, response) => {
  * @apiBody {String} message a message to replace with the associated name
  *
  * @apiSuccess {boolean} success true when the name is inserted
- * @apiSuccess {String} message the name of the updated message
+ * @apiSuccess {String} message the string "Updated: ***name***" where ***name*** corresponds
+ * to the parameter string name.
  *
  * @apiError (404: Name Not Found) {String} message "Name not found"
  *
@@ -177,7 +179,8 @@ router.put("/", (request, response) => {
  * @apiParam {String} name the name entry  to delete
  *
  * @apiSuccess {boolean} success true when the name is delete
- * @apiSuccess {String} message the name of the deleted entry
+ * @apiSuccess {String} message the string "Deleted: ***name***" where ***name*** corresponds
+ * to the parameter string name.
  *
  * @apiError (404: Name Not Found) {String} message "Name not found"
  *
