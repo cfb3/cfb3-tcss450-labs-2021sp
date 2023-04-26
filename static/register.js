@@ -19,11 +19,11 @@ const router = express.Router();
  * @apiName PostAuth
  * @apiGroup Auth
  *
- * @apiParam {String} first a users first name
- * @apiParam {String} last a users last name
- * @apiParam {String} email a users email *unique
- * @apiParam {String} password a users password
- * @apiParam {String} [username] a username *unique, if none provided, email will be used
+ * @apiBody {String} first a users first name
+ * @apiBody {String} last a users last name
+ * @apiBody {String} email a users email *unique
+ * @apiBody {String} password a users password
+ * @apiBody {String} [username] a username *unique, if none provided, email will be used
  *
  * @apiParamExample {json} Request-Body-Example:
  *  {
@@ -41,9 +41,6 @@ const router = express.Router();
  * @apiError (400: Username exists) {String} message "Username exists"
  *
  * @apiError (400: Email exists) {String} message "Email exists"
- *
- * @apiError (400: Other Error) {String} message "other error, see detail"
- * @apiError (400: Other Error) {String} detail Information about th error
  *
  */
 router.post(
@@ -70,12 +67,6 @@ router.post(
     }
   },
   (request, response, next) => {
-    //We're storing salted hashes to make our application more secure
-    //If you're interested as to what that is, and why we should use it
-    //watch this youtube video: https://www.youtube.com/watch?v=8ZtInClXe1Q
-    let salt = generateSalt(32);
-    let salted_hash = generateHash(request.body.password, salt);
-
     //We're using placeholders ($1, $2, $3) in the SQL query string to avoid SQL Injection
     //If you want to read more: https://stackoverflow.com/a/8265319
     let theQuery =
